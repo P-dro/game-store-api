@@ -1,10 +1,13 @@
 
 package com.estudo.pedro.API.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.estudo.pedro.API.repository.JogoRepository;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.Date;
 
 @Entity
@@ -12,13 +15,23 @@ public class Jogo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String jogo;
-    private double valor;
-    private Date data_cadastro;
+    @NotNull @NotEmpty @Length(min = 5)
+    private String titulo;
+    @NotNull @NotEmpty
+    private Long valor;
+    private Date data_cadastro = new Date();
     private String grupos_console;
     private String observacoes;
-    private Boolean ativo;
+    private Boolean ativo = true;
 
+    public Jogo() {
+
+    }
+
+    public Jogo(String titulo, Long valor) {
+        this.titulo = titulo;
+        this.valor = valor;
+    }
 
     public Long getId() {
         return id;
@@ -28,19 +41,17 @@ public class Jogo {
         this.id = id;
     }
 
-    public String getJogo() {
-        return jogo;
+    public String getTitulo() {return titulo; }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public void setJogo(String jogo) {
-        this.jogo = jogo;
-    }
-
-    public double getValor() {
+    public Long getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(Long valor) {
         this.valor = valor;
     }
 
